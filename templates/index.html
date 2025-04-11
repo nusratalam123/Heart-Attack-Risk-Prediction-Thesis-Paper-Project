@@ -154,13 +154,12 @@
             <button type="submit" class="submit-btn">🔍 Check</button>
         </form>
 
-        <!-- Only show prediction result if available -->
-{% if prediction %}
-<div class="result">
-    <h2>🩺 Prediction Result:</h2>
-    <p>{{ prediction }}</p>
-</div>
-{% endif %}
+        {% if prediction %}
+            <div class="result">
+                <h2>🩺 Prediction Result:</h2>
+                <p>{{ prediction }}</p>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>
