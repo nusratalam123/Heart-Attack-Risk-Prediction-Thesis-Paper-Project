@@ -1,55 +1,166 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Heart Disease Checker</h1>
-    <form method="post">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">
+            ❤️ <span>HeartGuard</span>
+        </div>
+        <div class="auth-buttons">
+            <button class="login-btn">Login</button>
+            <button class="register-btn">Register</button>
+        </div>
+    </nav>
 
-        <!-- Dropdown for Sex -->
-        <label>Sex:</label>
-        <select name="Sex" required>
-            <option value="0">Male</option>
-            <option value="1">Female</option>
-        </select><br><br>
+    <div class="container">
+        <h1>❤️ Heart Disease Checker</h1>
+        <form method="post">
+            <div class="form-grid">
+                <!-- Sex -->
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="Sex" required>
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
+                    </select>
+                </div>
 
-        <!-- Dropdown for Chest Pain Type -->
-        <label>ChestPainType:</label>
-        <select name="ChestPainType" required>
-            <option value="0">TA</option>
-            <option value="1">ATA</option>
-            <option value="2">NAP</option>
-            <option value="3">ASY</option>
-        </select><br><br>
+                <!-- Chest Pain Type -->
+                <div class="form-group">
+                    <label for="chestPain">Chest Pain Type</label>
+                    <select id="chestPain" name="ChestPainType" required>
+                        <option value="0">Typical Angina</option>
+                        <option value="1">Atypical Angina</option>
+                        <option value="2">Non-Anginal Pain</option>
+                        <option value="3">Asymptomatic</option>
+                    </select>
+                </div>
 
-        <!-- Dropdown for RestingECG -->
-        <label>RestingECG:</label>
-        <select name="RestingECG" required>
-            <option value="0">Normal</option>
-            <option value="1">ST</option>
-            <option value="2">LVH</option>
-        </select><br><br>
+                <!-- Resting ECG -->
+                <div class="form-group">
+                    <label for="restingECG">Resting ECG</label>
+                    <select id="restingECG" name="RestingECG" required>
+                        <option value="0">Normal</option>
+                        <option value="1">ST-T Abnormality</option>
+                        <option value="2">Left Ventricular Hypertrophy</option>
+                    </select>
+                </div>
 
-        <!-- Dropdown for ExerciseAngina -->
-        <label>ExerciseAngina:</label>
-        <select name="ExerciseAngina" required>
-            <option value="0">No (N)</option>
-            <option value="1">Yes (Y)</option>
-        </select><br><br>
+                <!-- Exercise Angina -->
+                <div class="form-group">
+                    <label for="exerciseAngina">Exercise-Induced Angina</label>
+                    <select id="exerciseAngina" name="ExerciseAngina" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
 
-        <!-- Text input for remaining numerical features -->
-        {% for field in ['FastingBS', 'RestingBP', 'Cholesterol', 'MaxHR', 'Oldpeak',
-                         'ST_Slope', 'trestbps', 'thalach', 'ca', 'thal', 'Merged_Age'] %}
-            <label>{{ field }}:</label>
-            <input type="number" step="any" name="{{ field }}" required><br><br>
-        {% endfor %}
+                <!-- Fasting Blood Sugar -->
+                <div class="form-group">
+                    <label for="fastingBS">Fasting Blood Sugar</label>
+                    <select id="fastingBS" name="FastingBS" required>
+                        <option value="0">≤ 120 mg/dl</option>
+                        <option value="1">> 120 mg/dl</option>
+                    </select>
+                </div>
 
-        <input type="submit" value="Check">
-    </form>
+                <!-- Resting Blood Pressure -->
+                <div class="form-group">
+                    <label for="restingBP">Resting BP (mm Hg)</label>
+                    <input type="number" id="restingBP" name="RestingBP" placeholder="e.g. 130" required>
+                </div>
 
-    {% if prediction %}
-        <h2>Result: {{ prediction }}</h2>
-    {% endif %}
+                
+
+                <!-- Cholesterol -->
+                <div class="form-group">
+                    <label for="cholesterol">Cholesterol (mg/dl)</label>
+                    <input type="number" id="cholesterol" name="Cholesterol" placeholder="e.g. 250" required>
+                </div>
+
+                <!-- Max Heart Rate -->
+                <div class="form-group">
+                    <label for="maxHR">Max Heart Rate</label>
+                    <input type="number" id="maxHR" name="MaxHR" placeholder="e.g. 160" required>
+                </div>
+
+                <!-- Oldpeak (ST Depression) -->
+                <div class="form-group">
+                    <label for="oldpeak">ST Depression (Oldpeak)</label>
+                    <select id="oldpeak" name="Oldpeak" required>
+                        <option value="0">Level 0</option>
+                        <option value="1">Level 1</option>
+                        <option value="2">Level 2</option>
+                        <option value="3">Level 3</option>
+                    </select>
+                </div>
+
+                <!-- ST Slope -->
+                <div class="form-group">
+                    <label for="stSlope">ST Slope</label>
+                    <select id="stSlope" name="ST_Slope" required>
+                        <option value="0">Upsloping</option>
+                        <option value="1">Flat</option>
+                        <option value="2">Downsloping</option>
+                    </select>
+                </div>
+
+                <!-- Trestbps -->
+                <div class="form-group">
+                    <label for="trestbps">Trestbps</label>
+                    <input type="number" id="trestbps" name="trestbps" placeholder="e.g. 130" required>
+                </div>
+
+                <!-- Thalach -->
+                <div class="form-group">
+                    <label for="thalach">Thalach (Max HR Achieved)</label>
+                    <input type="number" id="thalach" name="thalach" placeholder="e.g. 170" required>
+                </div>
+
+                <!-- CA (Number of major vessels) -->
+                <div class="form-group">
+                    <label for="ca">CA (Number of vessels colored)</label>
+                    <select id="ca" name="ca" required>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+
+                <!-- Thal -->
+                <div class="form-group">
+                    <label for="thal">Thalassemia Type</label>
+                    <select id="thal" name="thal" required>
+                        <option value="0">Normal</option>
+                        <option value="1">Fixed Defect</option>
+                        <option value="2">Reversible Defect</option>
+                    </select>
+                </div>
+
+                <!-- Age -->
+                <div class="form-group">
+                    <label for="age">Age (Years)</label>
+                    <input type="number" id="age" name="Merged_Age" placeholder="e.g. 55" required>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">🔍 Check</button>
+        </form>
+
+        <!-- Only show prediction result if available -->
+{% if prediction %}
+<div class="result">
+    <h2>🩺 Prediction Result:</h2>
+    <p>{{ prediction }}</p>
+</div>
+{% endif %}
+    </div>
 </body>
 </html>
