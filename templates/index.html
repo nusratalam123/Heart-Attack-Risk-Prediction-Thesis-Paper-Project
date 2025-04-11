@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Heart Disease Prediction</title>
+</head>
+<body>
+    <h1>Heart Disease Checker</h1>
+    <form method="post">
+
+        <!-- Dropdown for Sex -->
+        <label>Sex:</label>
+        <select name="Sex" required>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+        </select><br><br>
+
+        <!-- Dropdown for Chest Pain Type -->
+        <label>ChestPainType:</label>
+        <select name="ChestPainType" required>
+            <option value="0">TA</option>
+            <option value="1">ATA</option>
+            <option value="2">NAP</option>
+            <option value="3">ASY</option>
+        </select><br><br>
+
+        <!-- Dropdown for RestingECG -->
+        <label>RestingECG:</label>
+        <select name="RestingECG" required>
+            <option value="0">Normal</option>
+            <option value="1">ST</option>
+            <option value="2">LVH</option>
+        </select><br><br>
+
+        <!-- Dropdown for ExerciseAngina -->
+        <label>ExerciseAngina:</label>
+        <select name="ExerciseAngina" required>
+            <option value="0">No (N)</option>
+            <option value="1">Yes (Y)</option>
+        </select><br><br>
+
+        <!-- Text input for remaining numerical features -->
+        {% for field in ['FastingBS', 'RestingBP', 'Cholesterol', 'MaxHR', 'Oldpeak',
+                         'ST_Slope', 'trestbps', 'thalach', 'ca', 'thal', 'Merged_Age'] %}
+            <label>{{ field }}:</label>
+            <input type="number" step="any" name="{{ field }}" required><br><br>
+        {% endfor %}
+
+        <input type="submit" value="Check">
+    </form>
+
+    {% if prediction %}
+        <h2>Result: {{ prediction }}</h2>
+    {% endif %}
+</body>
+</html>
